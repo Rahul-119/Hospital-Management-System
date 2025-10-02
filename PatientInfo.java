@@ -124,7 +124,7 @@ class PatientInfo {
         temp.medicalHistory = updatedPatientInfo.medicalHistory;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
