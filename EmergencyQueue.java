@@ -46,6 +46,59 @@ class EmergencyPatient implements Comparable<EmergencyPatient> {
 public class EmergencyQueue {
     private final PriorityQueue<EmergencyPatient> pq = new PriorityQueue<>();
 
+    public void addPatientInteractive(Scanner sc) {
+        UUID id = UUID.randomUUID();
+        System.out.print("Enter Patient Name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter Age: ");
+        int age = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Enter Gender: ");
+        String gender = sc.nextLine();
+        System.out.print("Enter Mobile: ");
+        String mobile = sc.nextLine();
+        System.out.print("Enter Medical History: ");
+        String history = sc.nextLine();
+        System.out.print("Enter Diagnosis/Condition: ");
+        String condition = sc.nextLine();
+        System.out.print("Enter Priority (1-5): ");
+        int priority = sc.nextInt();
+        sc.nextLine();
+
+        EmergencyPatient patient = new EmergencyPatient(id, name, age, condition, gender, mobile, history, priority);
+        addPatient(patient);
+    }
+
+    public void runMenu(Scanner sc) {
+        boolean running = true;
+        while (running) {
+            System.out.println("\n--- Emergency Queue Menu ---");
+            System.out.println("1. Add Patient");
+            System.out.println("2. Treat Patient");
+            System.out.println("3. Display Queue");
+            System.out.println("4. Exit to Main Menu");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    addPatientInteractive(sc);
+                    break;
+                case 2:
+                    treatPatient();
+                    break;
+                case 3:
+                    display();
+                    break;
+                case 4:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+
     void addPatient(EmergencyPatient patient) {
         pq.add(patient);
         System.out.println("Patient added to Emergency Queue");
@@ -69,70 +122,6 @@ public class EmergencyQueue {
         System.out.println("Patients currently in Emergency Queue: ");
         for (EmergencyPatient patient : pq) {
             System.out.println(patient);
-        }
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        EmergencyQueue eq = new EmergencyQueue();
-
-        UUID id;
-        String name, condition, gender, mobile, medicalHistory;
-        int age, priority;
-        int option;
-        boolean running = true;
-
-        while (running) {
-            System.out.println("Hi, how can I help: ");
-            System.out.println("1.Add Patient in Emergency Queue");
-            System.out.println("2.Treat Patient");
-            System.out.println("3.Display Patients in Emergency Queue");
-            System.out.println("4.Exit");
-            option = sc.nextInt();
-            sc.nextLine();
-
-            switch (option) {
-                case 1:
-                    id = UUID.randomUUID();
-                    System.out.println("Enter Patient's name: ");
-                    name = sc.nextLine();
-                    System.out.println("Enter Patient's age (eg: 19): ");
-                    age = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Enter Patient's sex (eg: M): ");
-                    gender = sc.nextLine();
-                    System.out.println("Enter Patient's Mobile No: ");
-                    mobile = sc.nextLine();
-                    System.out.println("Patient's Medical History: ");
-                    medicalHistory = sc.nextLine();
-                    System.out.println("Patient's Diagnosis: ");
-                    condition = sc.nextLine();
-
-                    System.out.println("How Critical is the patient? (1-5):");
-                    priority = sc.nextInt();
-
-                    EmergencyPatient patient = new EmergencyPatient(id, name, age, condition, gender, mobile,
-                            medicalHistory, priority);
-
-                    eq.addPatient(patient);
-                    break;
-
-                case 2:
-                    eq.treatPatient();
-                    break;
-
-                case 3:
-                    eq.display();
-                    break;
-
-                case 4:
-                    System.out.println("Have a nice day!");
-                    running = false;
-                    break;
-                default:
-                    throw new AssertionError();
-            }
         }
     }
 }
